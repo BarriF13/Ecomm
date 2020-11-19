@@ -6,7 +6,7 @@ const app = express();
 //route handler -- tells server what to do when in gets network request from browser 
 //req or request have info about user input or request --from user --object
 //res or response have info from server and data  -- from server --object 
-app.get('/', ( req, res )=> {
+app.get('/', (req, res) => {
   res.send(`
     <div>
     <form method="POST">
@@ -19,23 +19,34 @@ app.get('/', ( req, res )=> {
   `)
 
 });
-app.post('/', (req, res)=>{
-  //get access to email and pass from req object or input object
-  req.on('data', data =>{
-   const parsed = data.toString('utf8').split('&');
-   const formData = {};
 
-   for( pair of parsed){
-     const [key , value ] = pair.split('=');
-     formData[key] = value;
-   }
-   console.log(formData);
-  })
-res.send('Account created!')
+//------------ middleware function
 
-}); 
+const bodyParser = (req, res, next) => {
+  if (req.method === 'POST') {
+    req.on('data', data => {
+      const parsed = data.toString('utf8').split('&');
+      const formData = {};
+
+      for (pair of parsed) {
+        const [key, value] = pair.split('=');
+        formData[key] = value;
+      }
+      req.body = formData;
+      next();
+    })
+  } else {
+    next();
+  }
+};
+//---- now we use the middleware 
+app.post('/', bodyParser, (req, res) => {
+  console.log(req.body);
+  res.send('Account created!')
+
+});
 
 
-app.listen(3000, () =>{
+app.listen(3000, () => {
   console.log('Listening');
 });
