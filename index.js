@@ -7,7 +7,16 @@ const app = express();
 //req or request have info about user input or request --from user --object
 //res or response have info from server and data  -- from server --object 
 app.get('/', ( req, res )=> {
-  res.send('Hi there!')
+  res.send(`
+    <div>
+    <form>
+      <input placeholder = "email"/>
+      <input placeholder = "password"/>
+      <input placeholder = "password confirmation"/>
+      <button>Sign Up</button>
+    </form>
+    </div>
+  `)
 
 });
 
