@@ -59,13 +59,27 @@ class UserRepository {
    return  records.find(record => record.id === id);
   }
   async delete(id){
-    const records = await this.getAll()
+    const records = await this.getAll();
     //filter will eliminate the ids which does not want to be deleted --true
    const filteredRecord =  records.filter(record => record.id !== id);
    //and we put those records back
    await this.writeAll(filteredRecord)
+  }
+  async update(id, attrs){
+    const records = await this.getAll();// get all the records
+    const record = records.find(record => record.id === id);//find the specific record
 
+    if(!record){
+     throw new Error(`Record with id ${id} not found`);
+    }
+    // records ==={ email: 'test@test.com'}
+    // attrs ==={ password: '1234'}
+    Object.assign(record, attrs)//object.assign takes every thing fro, attrs and put it in record
+    // record = {email: 'test@test.com', password: '1234' }
+    
 
+    //after update we put the record to the array
+    await this.writeAll(records);
   }
   randomId() {
     //return Math.random() * 99999;
@@ -88,12 +102,15 @@ const test = async () => {
   //--1 create a repo with a given name
   const repo = new UserRepository('users.json');
   //--4 create a user
-  //await repo.create({ email: 'bla@blabla.com', password: 'test', passwordConfirmation: 'testagain' });
+ // await repo.create({ email: 'bla@blabla.com' });
+
+//-7 update
+await repo.update( "3c134864",{password: 'my pass'})
 
    //--6 test id
    //const user = await repo.getOne("1e81118b");
    //-- test delete 
-   await repo.delete("1e81418b");
+   //await repo.delete("1e81418b");
   // --5 get all the users
  //const users = await repo.getAll();
 
