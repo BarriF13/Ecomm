@@ -106,8 +106,42 @@ class UserRepository {
   }
 }
 
-//Export the module 
-// module.export = UsersRepository; 
+/// tests
+//----------------1
+//new UserRepository();
+//----------------2
+// const test = async () => {
+// const repo = new UserRepository('users.json');
 
-//instead of exporting the class we export the instant of the class with the json file already set for preventing mistakes later in coding
-module.exports = new UserRepository('users.json');
+// await repo.getAll();
+// };
+//-----------------3
+const test = async () => {
+  //--1 create a repo with a given name
+  const repo = new UserRepository('users.json');
+  //--4 create a user
+  // await repo.create({ email: 'bla@blabla.com' });
+
+  //-7 update
+  //await repo.update( "3c134864",{password: 'my pass'})
+
+  // -8 get one by
+  const user = await repo.getOneBy({
+    "id": "3c134864"
+     
+     })
+
+  //--6 test id
+  //const user = await repo.getOne("1e81118b");
+  //-- test delete 
+  //await repo.delete("1e81418b");
+  // --5 get all the users
+  //const users = await repo.getAll();
+
+
+  //log them out
+  console.log(user);
+
+};
+
+test();
