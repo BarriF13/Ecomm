@@ -54,11 +54,15 @@ class UserRepository {
       JSON.stringify(records, null, 2));// 2 in indentation
 
   }
-   randomId(){
-     //return Math.random() * 99999;
-     return crypto.randomBytes(4).toString('hex');
-     
-   }
+  async getOne(id) {
+    const records = await this.getAll()
+   return  records.find(record => record.id === id);
+  }
+  randomId() {
+    //return Math.random() * 99999;
+    return crypto.randomBytes(4).toString('hex');
+
+  }
 }
 
 /// tests
@@ -72,14 +76,20 @@ class UserRepository {
 // };
 //-----------------3
 const test = async () => {
-  //create a repo with a given name
+  //--1 create a repo with a given name
   const repo = new UserRepository('users.json');
-  //create a user
-  await repo.create({ email: 'bla@blabla.com', password: 'test', passwordConfirmation: 'testagain' });
-  // get all the users
-  const users = await repo.getAll();
+  //--4 create a user
+  //await repo.create({ email: 'bla@blabla.com', password: 'test', passwordConfirmation: 'testagain' });
+
+   //--6 test id
+   const user = await repo.getOne("1e81118b");
+
+  // --5 get all the users
+ //const users = await repo.getAll();
+
+ 
   //log them out
-  console.log(users);
+  console.log(user);
 
 };
 
