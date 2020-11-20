@@ -1,17 +1,9 @@
-[ 
+[
   {
     "email": "bla@blabla.com",
     "password": "test",
-    "passwordConfirmation": "testagain"
-  },
-  {
-    "email": "bla@blabla.com",
-    "password": "test",
-    "passwordConfirmation": "testagain"
-  },
-  {
-    "email": "bla@blabla.com",
-    "password": "test",
-    "passwordConfirmation": "testagain"
+    "passwordConfirmation": "testagain",
+    "id": "1e81118b",
+    "bd": "I love javascript"
   }
 ]

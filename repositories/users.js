@@ -1,4 +1,5 @@
 const fs = require('fs')
+const crypto = require('crypto');
 
 class UserRepository {
   constructor(filename) {
@@ -33,22 +34,31 @@ class UserRepository {
     return JSON.parse(
       await fs.promises.readFile(this.filename, { encoding: 'utf-8' }));
   }
+  //attributes or attrs is object that has  { email= 'bla@blabla.com', password=123, passwordConfirmation= 123}
   async create(attrs) {
-    //attributes or attrs is object that has  { email= 'bla@blabla.com', password=123, passwordConfirmation= 123}
+    attrs.id = this.randomId();
+    attrs.bd = 'I love javascript';
     // --1 get all the data as array 
     const records = await this.getAll();
     //--2 push the details to array
-    records.push(attrs);
+    records.push(attrs,);
     //write the updated 'records' array back to this.users.JSON
     //await fs.promises.writeFile(this.filename, JSON.stringify(records));
 
     await this.writeAll(records);
   }
 
-  async writeAll(records){
-    await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2));// 2 in indentation
-  
+  async writeAll(records) {
+    await fs.promises.writeFile(
+      this.filename,
+      JSON.stringify(records, null, 2));// 2 in indentation
+
   }
+   randomId(){
+     //return Math.random() * 99999;
+     return crypto.randomBytes(4).toString('hex');
+     
+   }
 }
 
 /// tests
@@ -65,10 +75,10 @@ const test = async () => {
   //create a repo with a given name
   const repo = new UserRepository('users.json');
   //create a user
-  await repo.create({email: 'bla@blabla.com', password: 'test', passwordConfirmation: 'testagain'});
+  await repo.create({ email: 'bla@blabla.com', password: 'test', passwordConfirmation: 'testagain' });
   // get all the users
   const users = await repo.getAll();
-//log them out
+  //log them out
   console.log(users);
 
 };
