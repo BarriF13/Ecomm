@@ -18,17 +18,7 @@ class UserRepository {
     }
 
   }
-  // async getAll(){
-  //   // Open the file called this.filename
-  //   const contents = await fs.promises.readFile(this.filename, {encoding:'utf-8'});
-  //   // Read its content
-  //  // console.log(contents);
-  //   // Parse the contents
-  // const data = JSON.parse(contents);
-  //   // Return the parsed data
-  //  return data;
-  // }
-  //--- refactor the getAll
+
   async getAll() {
 
     return JSON.parse(
@@ -42,8 +32,7 @@ class UserRepository {
     const records = await this.getAll();
     //--2 push the details to array
     records.push(attrs,);
-    //write the updated 'records' array back to this.users.JSON
-    //await fs.promises.writeFile(this.filename, JSON.stringify(records));
+   
 
     await this.writeAll(records);
   }
@@ -74,11 +63,7 @@ class UserRepository {
     }
     // records ==={ email: 'test@test.com'}
     // attrs ==={ password: '1234'}
-    Object.assign(record, attrs)//object.assign takes every thing fro, attrs and put it in record
-    // record = {email: 'test@test.com', password: '1234' }
-
-
-    //after update we put the record to the array
+    Object.assign(record, attrs)//object.assign takes every thing fro, 
     await this.writeAll(records);
   }
 
@@ -109,5 +94,5 @@ class UserRepository {
 //Export the module 
 // module.export = UsersRepository; 
 
-//instead of exporting the class we export the instant of the class with the json file already set for preventing mistakes later in coding
+//instead of exporting the class we export the instance of the class with the json file already set for preventing mistakes later in coding
 module.exports = new UserRepository('users.json');
