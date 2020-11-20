@@ -33,6 +33,15 @@ class UserRepository {
     return JSON.parse(
       await fs.promises.readFile(this.filename, { encoding: 'utf-8' }));
   }
+  async create(attrs) {
+    //attributes or attrs is object that has  { email= 'bla@blabla.com', password=123, passwordConfirmation= 123}
+    // --1 get all the data as array 
+    const records = await this.getAll();
+    //--2 push the details to array
+    records.push(attrs);
+    //write the updated 'records' array back to this.users.JSON
+    await fs.promises.writeFile(this.filename, JSON.stringify(records));
+  }
 }
 /// tests
 //----------------1
@@ -45,9 +54,14 @@ class UserRepository {
 // };
 //-----------------3
 const test = async () => {
+  //create a repo with a given name
   const repo = new UserRepository('users.json');
-
+  //create a user
+  await repo.create({email: 'bla@blabla.com', password: 'test', passwordConfirmation: 'testagain'});
+  // get all the users
   const users = await repo.getAll();
+//log them out
   console.log(users);
+
 };
 test();
