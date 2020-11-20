@@ -40,9 +40,17 @@ class UserRepository {
     //--2 push the details to array
     records.push(attrs);
     //write the updated 'records' array back to this.users.JSON
-    await fs.promises.writeFile(this.filename, JSON.stringify(records));
+    //await fs.promises.writeFile(this.filename, JSON.stringify(records));
+
+    await this.writeAll(records);
+  }
+
+  async writeAll(records){
+    await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2));// 2 in indentation
+  
   }
 }
+
 /// tests
 //----------------1
 //new UserRepository();
@@ -64,4 +72,5 @@ const test = async () => {
   console.log(users);
 
 };
+
 test();

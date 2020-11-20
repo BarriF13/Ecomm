@@ -1,1 +1,17 @@
-[{"email":"bla@blabla.com","password":"test","passwordConfirmation":"testagain"},{"email":"bla@blabla.com","password":"test","passwordConfirmation":"testagain"}]
+[ 
+  {
+    "email": "bla@blabla.com",
+    "password": "test",
+    "passwordConfirmation": "testagain"
+  },
+  {
+    "email": "bla@blabla.com",
+    "password": "test",
+    "passwordConfirmation": "testagain"
+  },
+  {
+    "email": "bla@blabla.com",
+    "password": "test",
+    "passwordConfirmation": "testagain"
+  }
+]
