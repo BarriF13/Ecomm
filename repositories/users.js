@@ -58,6 +58,15 @@ class UserRepository {
     const records = await this.getAll()
    return  records.find(record => record.id === id);
   }
+  async delete(id){
+    const records = await this.getAll()
+    //filter will eliminate the ids which does not want to be deleted --true
+   const filteredRecord =  records.filter(record => record.id !== id);
+   //and we put those records back
+   await this.writeAll(filteredRecord)
+
+
+  }
   randomId() {
     //return Math.random() * 99999;
     return crypto.randomBytes(4).toString('hex');
@@ -82,14 +91,15 @@ const test = async () => {
   //await repo.create({ email: 'bla@blabla.com', password: 'test', passwordConfirmation: 'testagain' });
 
    //--6 test id
-   const user = await repo.getOne("1e81118b");
-
+   //const user = await repo.getOne("1e81118b");
+   //-- test delete 
+   await repo.delete("1e81418b");
   // --5 get all the users
  //const users = await repo.getAll();
 
  
   //log them out
-  console.log(user);
+  // console.log(user);
 
 };
 
