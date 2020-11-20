@@ -23,6 +23,32 @@ app.get('/', (req, res) => {
 
 });
 
+app.post('/',  (req, res) => {
+  console.log(req.body);
+  res.send('Account created!')
+
+});
+
+
+app.listen(3000, () => {
+  console.log('Listening');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //------------ middleware function
 
 // const bodyParser = (req, res, next) => {
@@ -43,13 +69,3 @@ app.get('/', (req, res) => {
 //   }
 // };
 //---- now we use the middleware 
-app.post('/',  (req, res) => {
-  console.log(req.body);
-  res.send('Account created!')
-
-});
-
-
-app.listen(3000, () => {
-  console.log('Listening');
-});
