@@ -1,6 +1,9 @@
 const fs = require('fs')
 const crypto = require('crypto');
+const util = require('util');
 
+//promise version
+const scrypt = util.promisify(crypto.scrypt);
 class UserRepository {
   constructor(filename) {
     //if no file name 
@@ -26,16 +29,31 @@ class UserRepository {
   }
   //attributes or attrs is object that has  { email= 'bla@blabla.com', password=123, passwordConfirmation= 123}
   async create(attrs) {
+    // attrs ==={ email: '', password:'' }
     attrs.id = this.randomId();
+
+    const salt = crypto.randomBytes(8).toString('hex');
+    //call back version of scrypt -- wont use this one instead we will use promised version of the scrypt
+    //  scrypt(attrs.password, salt, 64, (err , buf)=>{
+    //   const hashed = buf.toString('hex');
+    //Promise version 
+    const buf = await scrypt(attrs.password, salt, 64);
     //attrs.bd = 'I love javascript';
     // --1 get all the data as array 
     const records = await this.getAll();
     //--2 push the details to array
-    records.push(attrs,);
-   
+    //records.push(attrs,);
+
+    const record = {
+      ...attrs,
+      password: `${buf.toString('hex')}.${salt}`
+    }
+    records.push(record);
+
 
     await this.writeAll(records);
-    return attrs;
+    // return attrs;
+    return record;
   }
 
   async writeAll(records) {
@@ -75,11 +93,11 @@ class UserRepository {
       let found = true;
       //loop in object
       for (let key in filters) {
-        if(record[key] !== filters[key] ){
+        if (record[key] !== filters[key]) {
           found = false;
         }
       }
-      if(found){ // if found is true mean we found the record so we return it
+      if (found) { // if found is true mean we found the record so we return it
         return record;
       }
     }
