@@ -59,7 +59,7 @@ app.get('/signout', ( req, res)=>{
   req.session = null;
   res.send('You are logged out');
 });
-//show only sign in form to user
+//show only sign in form to user--user to server f
 app.get('/signin', (req, res)=>{
   res.send(`
   <div>
@@ -71,7 +71,19 @@ app.get('/signin', (req, res)=>{
   </div>
   `)
 });
+//server side to user
 app.post('/signin', async (req, res)=>{
+  const {email, password} = req.body;
+
+  const user = await usersRepo.getOneBy({email: email});
+  if(!user){
+    return res.send('Email not found!')
+  }
+  if(user.password !== password ){
+    return res.send('Invalid password')
+  }
+  req.session.userId = user.id;
+  res.send('You are signed in !!!')
 
 })
 
