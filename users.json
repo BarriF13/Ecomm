@@ -6,5 +6,10 @@
     "email": "user@cookie.com",
     "password": "foo",
     "id": "ede8d1a1"
+  },
+  {
+    "email": "",
+    "password": "",
+    "id": "dd015362"
   }
 ]
