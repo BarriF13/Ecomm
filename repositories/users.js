@@ -27,7 +27,7 @@ class UserRepository {
   //attributes or attrs is object that has  { email= 'bla@blabla.com', password=123, passwordConfirmation= 123}
   async create(attrs) {
     attrs.id = this.randomId();
-    attrs.bd = 'I love javascript';
+    //attrs.bd = 'I love javascript';
     // --1 get all the data as array 
     const records = await this.getAll();
     //--2 push the details to array
@@ -35,6 +35,7 @@ class UserRepository {
    
 
     await this.writeAll(records);
+    return attrs;
   }
 
   async writeAll(records) {

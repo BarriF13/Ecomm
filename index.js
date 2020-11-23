@@ -30,11 +30,16 @@ app.post('/', async (req, res) => {
  const existingUser = await usersRepo.getOneBy({email: email});
  if(existingUser){
    return res.send('Email has been already registered')
- }
+ } 
 
  if(password !== passwordConfirmation){
   return res.send('Passwords do not match')
 }
+//Create a user in our user repo to represent this person
+const user = await usersRepo.create({email: email, password: password});
+//Store the id of that user inside the users cookie
+
+
   res.send('Account created!')
 
 });
