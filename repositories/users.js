@@ -8,7 +8,7 @@ class UserRepository {
   constructor(filename) {
     //if no file name 
     if (!filename) {
-      throw new Error('Creating a repository requires a filename ')
+      throw new Error('Creating a repository requires a filename')
     }
 
     this.filename = filename;
@@ -19,13 +19,14 @@ class UserRepository {
       //if not make one
       fs.writeFileSync(this.filename, '[]')
     }
-
   }
 
   async getAll() {
-
     return JSON.parse(
-      await fs.promises.readFile(this.filename, { encoding: 'utf-8' }));
+      await fs.promises.readFile(this.filename, {
+        encoding: 'utf-8'
+      })
+    );
   }
   //attributes or attrs is object that has  { email= 'bla@blabla.com', password=123, passwordConfirmation= 123}
   async create(attrs) {
@@ -33,10 +34,7 @@ class UserRepository {
     attrs.id = this.randomId();
 
     const salt = crypto.randomBytes(8).toString('hex');
-    //call back version of scrypt -- wont use this one instead we will use promised version of the scrypt
-    //  scrypt(attrs.password, salt, 64, (err , buf)=>{
-    //   const hashed = buf.toString('hex');
-    //Promise version 
+
     const buf = await scrypt(attrs.password, salt, 64);
     //attrs.bd = 'I love javascript';
     // --1 get all the data as array 
@@ -72,6 +70,11 @@ class UserRepository {
     await fs.promises.writeFile(
       this.filename,
       JSON.stringify(records, null, 2));// 2 in indentation
+
+  }
+  randomId() {
+    //return Math.random() * 99999;
+    return crypto.randomBytes(4).toString('hex');
 
   }
   async getOne(id) {
@@ -115,15 +118,15 @@ class UserRepository {
     }
   }
 
-  randomId() {
-    //return Math.random() * 99999;
-    return crypto.randomBytes(4).toString('hex');
-
-  }
 }
 
-//Export the module 
+
+module.exports = new UserRepository('users.json');
+//Export the module
 // module.export = UsersRepository; 
 
 //instead of exporting the class we export the instance of the class with the json file already set for preventing mistakes later in coding
-module.exports = new UserRepository('users.json');
+  //call back version of scrypt -- wont use this one instead we will use promised version of the scrypt
+    //  scrypt(attrs.password, salt, 64, (err , buf)=>{
+    //   const hashed = buf.toString('hex');
+    //Promise version 
