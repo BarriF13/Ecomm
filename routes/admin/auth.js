@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
 const usersRepo = require('../../repositories/users');
@@ -13,7 +14,6 @@ const {
   requireValidPasswordForUser
 } = require('./validators');
 
-const router = express.Router();
 
 router.get('/signup', (req, res) => {
   res.send(signupTemplate({ req }));

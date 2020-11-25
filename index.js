@@ -2,7 +2,8 @@ const express = require('express');
 // middleware functions---
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-const authRouter = require('./routes/admin/auth')
+const authRouter = require('./routes/admin/auth');
+const productsRouter = require('./routes/admin/products');
 
 
 // app is an object that describe everything that webserver can do 
@@ -17,6 +18,7 @@ app.use(cookieSession({
 }));
 
 app.use(authRouter);
+app.use(productsRouter);
 
 app.listen(3000, () => {
   console.log('Listening');
