@@ -8,6 +8,9 @@ const authRouter = require('./routes/admin/auth')
 // app is an object that describe everything that webserver can do 
 const app = express();
 
+//css
+app.use(express.static('public'));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
   keys: ['bla1mnaena32']
