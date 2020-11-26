@@ -51,7 +51,7 @@ module.exports = class Repository {
   async delete(id) {
     const records = await this.getAll();
     const filteredRecord = records.filter(record => record.id !== id);
-    await this.writeAll(filteredRecord)
+    await this.writeAll(filteredRecord);
   }
   async update(id, attrs) {
     const records = await this.getAll();// get all the records
@@ -83,4 +83,4 @@ module.exports = class Repository {
   }
 
 
-}
+};

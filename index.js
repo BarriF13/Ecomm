@@ -21,5 +21,5 @@ app.use(authRouter);
 app.use(productsRouter);
 
 app.listen(3000, () => {
-  console.log('Listening');
+  console.log('Listening...');
 });
