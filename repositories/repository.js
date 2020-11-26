@@ -1,11 +1,10 @@
 const fs = require('fs');
 const crypto = require('crypto');
-
 module.exports = class Repository {
   constructor(filename) {
     //if no file name 
     if (!filename) {
-      throw new Error('Creating a repository requires a filename')
+      throw new Error('Creating a repository requires a filename');
     }
 
     this.filename = filename;
@@ -15,8 +14,10 @@ module.exports = class Repository {
       fs.writeFileSync(this.filename, '[]')
     }
   }
+
   async create(attrs){
     attrs.id = this.randomId();
+
      const records = await this.getAll();
      records.push(attrs); 
      await this.writeAll(records);
@@ -40,7 +41,6 @@ module.exports = class Repository {
 
   }
   randomId() {
-    //return Math.random() * 99999;
     return crypto.randomBytes(4).toString('hex');
 
   }
@@ -50,9 +50,7 @@ module.exports = class Repository {
   }
   async delete(id) {
     const records = await this.getAll();
-    //filter will eliminate the ids which does not want to be deleted --true
     const filteredRecord = records.filter(record => record.id !== id);
-    //and we put those records back
     await this.writeAll(filteredRecord)
   }
   async update(id, attrs) {
@@ -62,8 +60,7 @@ module.exports = class Repository {
     if (!record) {
       throw new Error(`Record with id ${id} not found`);
     }
-    // records ==={ email: 'test@test.com'}
-    // attrs ==={ password: '1234'}
+ 
     Object.assign(record, attrs)//object.assign takes every thing fro, 
     await this.writeAll(records);
   }

@@ -5,5 +5,6 @@
 ### express : webserver maker --npm run dev
 ### express-validator : for validation a form
 ### nodemon : CL tool
-### bodyParser
+### bodyParser: middleware
+### multer : middleware
 ### cookie-session : for managing cookies

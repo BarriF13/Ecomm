@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 
-const usersRepo = require('./repositories/users');
+const usersRepo = require('../repositories/users');
 
 // app is an object that describe everything that webserver can do 
 const app = express();
