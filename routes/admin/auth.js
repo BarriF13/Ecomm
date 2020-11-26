@@ -55,15 +55,16 @@ router.post(
   [requireEmailExists, requireValidPasswordForUser],
   async (req, res) => {
     const errors = validationResult(req);
-    //console.log(errors);
-    if (!errors.isEmpty()) {
-      return res.send(signupTemplate({ errors }));
-    }
+    console.log(errors);
+    // if (!errors.isEmpty()) {
+    //   return res.send(signupTemplate({ errors }));
+    // }
     const { email } = req.body;
 
     const user = await usersRepo.getOneBy({ email });
 
     req.session.userId = user.id;
+    
     res.send('You are signed in!!!')
   });
 
