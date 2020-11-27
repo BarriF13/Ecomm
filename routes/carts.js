@@ -51,5 +51,8 @@ router.get('/cart',async (req,res)=>{
   res.send(cartShowTemplate({ items: cart.items}))
 });
 // Receive a post req to delete an item in the cart 
+router.post('/cart/products/delete', (req , res)=>{
+  console.log(req.body.itemId);
+})
 module.exports = router;
 
